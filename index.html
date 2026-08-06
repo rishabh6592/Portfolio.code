@@ -275,6 +275,100 @@
   </div>
 </div>
 
+<!-- Back to Top Button -->
+<button id="backToTop" aria-label="Back to top">
+  <i class="ri-arrow-up-line"></i>
+</button>
+
+<style>
+#backToTop {
+  position: fixed !important;
+  bottom: 60px;
+  right: 20px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: #1e1e2e;
+  color: #fff;
+  font-size: 15px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(15px);
+  transition: opacity .3s ease, transform .3s ease, background .2s ease;
+  z-index: 99999 !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+#backToTop.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+#backToTop:hover {
+  background: #4f46e5;
+}
+@media (max-width: 640px) {
+  #backToTop {
+    bottom: 55px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+}
+</style>
+
 <script src="script.js"></script>
+<script>
+  (function () {
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
+
+    // Sirf Projects aur Contact section me hi button dikhana hai
+    const targetSections = [
+      document.getElementById('projects'),
+      document.getElementById('contact')
+    ].filter(Boolean);
+
+    const scrollContainer = document.querySelector('.editor-pane') || window;
+
+    function isInTargetSection() {
+      return targetSections.some((sec) => {
+        const rect = sec.getBoundingClientRect();
+        // section ka kuch hissa viewport ke beech me visible ho to true
+        return rect.top < window.innerHeight * 0.6 && rect.bottom > window.innerHeight * 0.2;
+      });
+    }
+
+    function toggleBackToTop() {
+      if (isInTargetSection()) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }
+
+    [window, document, scrollContainer].forEach((el) => {
+      el.addEventListener('scroll', toggleBackToTop, { passive: true });
+    });
+    window.addEventListener('resize', toggleBackToTop);
+    toggleBackToTop();
+    setInterval(toggleBackToTop, 500);
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+      document.body.scrollTo({ top: 0, behavior: 'smooth' });
+      const ep = document.querySelector('.editor-pane');
+      if (ep) ep.scrollTo({ top: 0, behavior: 'smooth' });
+      const shell = document.querySelector('.shell');
+      if (shell) shell.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+</script>
 </body>
 </html>
