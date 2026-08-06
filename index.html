@@ -323,6 +323,15 @@
     font-size: 19px;
   }
 }
+
+/* Menu button ko cross me smoothly badalne ke liye */
+#menuToggle i {
+  transition: transform .25s ease;
+  display: inline-block;
+}
+#menuToggle.is-open i {
+  transform: rotate(90deg);
+}
 </style>
 
 <script src="script.js"></script>
@@ -336,24 +345,18 @@
         .map((id) => document.getElementById(id))
         .filter(Boolean);
 
-      function getScrollEl() {
-        const ep = document.querySelector('.editor-pane');
-        // agar .editor-pane hi actually scroll ho raha hai to usko use karo, warna window
-        if (ep && ep.scrollHeight > ep.clientHeight + 5) return ep;
-        return null; // null matlab window/document scroll ho raha hai
-      }
-
       function isTargetSectionInView() {
-        const scrollEl = getScrollEl();
-        const viewportH = scrollEl ? scrollEl.clientHeight : window.innerHeight;
-        const midPoint = viewportH / 2;
+        const viewportH = window.innerHeight || document.documentElement.clientHeight;
+        // exact midpoint ki jagah ek broad band (25% se 75% viewport) check karo -
+        // ye mobile pe fast scroll / address-bar resize ke against zyada reliable hai
+        const bandTop = viewportH * 0.25;
+        const bandBottom = viewportH * 0.75;
 
         return targetSections.some((sec) => {
           const rect = sec.getBoundingClientRect();
-          // section visible aur width/height 0 na ho (display:none nahi)
-          if (rect.width === 0 && rect.height === 0) return false;
-          // viewport ke center point par ye section ho to hi "current section" maano
-          return rect.top <= midPoint && rect.bottom >= midPoint;
+          if (rect.width === 0 && rect.height === 0) return false; // hidden/display:none
+          // section ka koi bhi hissa is band se overlap kare to "in view" maano
+          return rect.top <= bandBottom && rect.bottom >= bandTop;
         });
       }
 
@@ -371,19 +374,24 @@
         });
       }
 
+      // Scroll ke saare possible sources sun rahe hain (mobile pe bhi reliable)
       window.addEventListener('scroll', scheduleCheck, { passive: true });
       document.addEventListener('scroll', scheduleCheck, { passive: true, capture: true });
       window.addEventListener('resize', scheduleCheck);
       window.addEventListener('orientationchange', scheduleCheck);
+      window.addEventListener('touchmove', scheduleCheck, { passive: true });
+      window.addEventListener('touchend', scheduleCheck, { passive: true });
 
-      // Pehla check turant, phir kuch baar thoda ruk ke — kyunki images lazy-load
-      // hone se layout shift hota hai jo initial calculation ko galat kar sakta hai
+      const ep = document.querySelector('.editor-pane');
+      if (ep) ep.addEventListener('scroll', scheduleCheck, { passive: true });
+
+      // Turant check, phir kuch baar thoda ruk ke — images lazy-load hone se
+      // layout shift hota hai jo initial calculation ko galat kar sakta hai
       scheduleCheck();
-      [200, 500, 1000, 2000].forEach((delay) => setTimeout(scheduleCheck, delay));
+      [200, 500, 1000, 2000, 3000].forEach((delay) => setTimeout(scheduleCheck, delay));
       window.addEventListener('load', scheduleCheck);
 
       backToTopBtn.addEventListener('click', () => {
-        // click hote hi turant hide - scroll khatam hone ka wait nahi
         backToTopBtn.classList.remove('show');
 
         const homeLink =
@@ -392,25 +400,37 @@
         if (homeLink) homeLink.click();
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        const ep = document.querySelector('.editor-pane');
-        if (ep) ep.scrollTo({ top: 0, behavior: 'smooth' });
+        const epEl = document.querySelector('.editor-pane');
+        if (epEl) epEl.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
 
-    /* ---------- Menu toggle fix (baar-baar click karna padne wala bug) ---------- */
+    /* ---------- Menu toggle: hamburger <-> cross icon ---------- */
     const menuBtn = document.getElementById('menuToggle');
     const sidebarEl = document.getElementById('sidebar');
     if (menuBtn && sidebarEl) {
-      // Purane script.js ke duplicate/conflicting listeners hata kar
-      // ek hi clean, reliable listener attach kar rahe hain
+      // Purane duplicate/conflicting listeners hata kar ek hi clean listener
       const freshMenuBtn = menuBtn.cloneNode(true);
       menuBtn.parentNode.replaceChild(freshMenuBtn, menuBtn);
+      const icon = freshMenuBtn.querySelector('i');
 
       freshMenuBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        sidebarEl.classList.toggle('open');
-        document.body.classList.toggle('sidebar-open');
+
+        const isOpen = sidebarEl.classList.toggle('open');
+        document.body.classList.toggle('sidebar-open', isOpen);
+        freshMenuBtn.classList.toggle('is-open', isOpen);
+
+        if (icon) {
+          if (isOpen) {
+            icon.classList.remove('ri-menu-line');
+            icon.classList.add('ri-close-line');
+          } else {
+            icon.classList.remove('ri-close-line');
+            icon.classList.add('ri-menu-line');
+          }
+        }
       });
     }
   })();
