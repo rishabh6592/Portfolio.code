@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rishabh Kumar — Web Developer</title>
+<meta name="description" content="Rishabh Kumar — MERN stack web developer. Portfolio, projects, education and experience.">
+<link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Top tab bar -->
+<div class="topbar">
+  <div class="traffic-lights"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle file explorer"><i class="ri-menu-line"></i></button>
+  <nav class="tabs" id="tabs">
+    <a class="tab active" data-target="home"><span class="dot"></span>home.html</a>
+    <a class="tab" data-target="about"><span class="dot"></span>about.js</a>
+    <a class="tab" data-target="education"><span class="dot"></span>education.js</a>
+    <a class="tab" data-target="experience"><span class="dot"></span>experience.js</a>
+    <a class="tab" data-target="projects"><span class="dot"></span>projects.js</a>
+    <a class="tab" data-target="contact"><span class="dot"></span>contact.js</a>
+  </nav>
+</div>
+
+<div class="shell">
+  <!-- Sidebar file explorer -->
+  <aside class="sidebar" id="sidebar">
+    <div class="explorer-label">Explorer</div>
+    <div class="explorer-root"><i class="ri-folder-open-line"></i> rishabh-kumar</div>
+    <ul class="file-tree">
+      <li><a class="file-link active" data-target="home"><i class="ri-file-line"></i>home<span class="ext">.html</span></a></li>
+      <li><a class="file-link" data-target="about"><i class="ri-file-line"></i>about<span class="ext">.js</span></a></li>
+      <li><a class="file-link" data-target="education"><i class="ri-file-line"></i>education<span class="ext">.js</span></a></li>
+      <li><a class="file-link" data-target="experience"><i class="ri-file-line"></i>experience<span class="ext">.js</span></a></li>
+      <li><a class="file-link" data-target="projects"><i class="ri-file-line"></i>projects<span class="ext">.js</span></a></li>
+      <li><a class="file-link" data-target="contact"><i class="ri-file-line"></i>contact<span class="ext">.js</span></a></li>
+      <li><a class="file-link" href="assets/Rishabh_Resume.MERN.pdf" target="_blank" rel="noopener"><i class="ri-file-pdf-line"></i>resume<span class="ext">.pdf</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="explorer-label" style="padding:0;">Connect</div>
+      <div class="sidebar-social">
+        <a href="https://www.linkedin.com/in/rishabh-kumar-1806b423a/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+        <a href="https://github.com/rishabh6592" target="_blank" rel="noopener" aria-label="GitHub"><i class="ri-github-fill"></i></a>
+        <a href="mailto:rishabhkumar6592@gmail.com" aria-label="Email"><i class="ri-mail-fill"></i></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main editor pane -->
+  <main class="editor-pane">
+
+    <!-- HOME -->
+    <section class="code-section hero" id="home">
+      <div class="gutter">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+      </div>
+      <div class="code-content">
+        <p class="hero-tag"><span class="comment">// welcome to my portfolio</span></p>
+        <h1 class="hero-name"><span class="keyword">const</span> dev = <span class="string">"rishabh kumar"</span>;</h1>
+        <p class="hero-role"><span class="func">role</span>: <span id="typedRole"></span><span class="cursor"></span></p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact" data-target="contact"><i class="ri-chat-3-line"></i>Let's talk</a>
+          <a class="btn btn-ghost" href="assets/Rishabh_Kumar_Resume.pdf" target="_blank" rel="noopener"><i class="ri-download-line"></i>Resume</a>
+          <a class="btn btn-ghost" href="#projects" data-target="projects"><i class="ri-code-s-slash-line"></i>View work</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="code-section" id="about">
+      <div class="gutter">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+      </div>
+      <div class="code-content">
+        <div class="section-head"><span class="idx">01</span><h2>About<span class="dot">.</span></h2></div>
+        <p class="about-lede">Dynamic and results-oriented web developer pursuing expertise in developing and deploying end-to-end solutions. Proficient in both front-end and back-end development technologies, with a focus on delivering high-performance web applications.</p>
+
+        <div class="info-grid">
+          <div class="info-item"><b>City</b>Noida, Uttar Pradesh</div>
+          <div class="info-item"><b>Email</b>rishabhkumar6592@gmail.com</div>
+          <div class="info-item"><b>Phone</b>+91 9572863162</div>
+          <div class="info-item"><b>Focus</b>MERN Stack Development</div>
+        </div>
+
+        <p class="import-line"><span class="keyword">import</span> { React, Node, Express, JavaScript, MongoDB, HTML, CSS, Git } <span class="keyword">from</span> <span class="string">'./skills'</span>;</p>
+        <div class="skills-grid">
+          <div class="skill-chip"><img src="assets/images/React.png" alt="React JS" loading="lazy"><span>React JS</span></div>
+          <div class="skill-chip"><img src="assets/images/node.png" alt="Node JS" loading="lazy"><span>Node JS</span></div>
+          <div class="skill-chip"><img src="assets/images/express.png" alt="Express JS" loading="lazy"><span>Express JS</span></div>
+          <div class="skill-chip"><img src="assets/images/js.png" alt="JavaScript" loading="lazy"><span>JavaScript</span></div>
+          <div class="skill-chip"><img src="assets/images/mongodb.png" alt="MongoDB" loading="lazy"><span>MongoDB</span></div>
+          <div class="skill-chip"><img src="assets/images/html.png" alt="HTML" loading="lazy"><span>HTML</span></div>
+          <div class="skill-chip"><img src="assets/images/csss.png" alt="CSS" loading="lazy"><span>CSS</span></div>
+          <div class="skill-chip"><img src="assets/images/gti.png" alt="Git & GitHub" loading="lazy"><span>Git & GitHub</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="code-section" id="education">
+      <div class="gutter">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+      </div>
+      <div class="code-content">
+        <div class="section-head"><span class="idx">02</span><h2>Education<span class="dot">.</span></h2></div>
+
+        <div class="edu-card">
+          <h3>RGPV University, Bhopal</h3>
+          <p class="course">B.Tech. in Computer Science &amp; Engineering</p>
+          <p class="dates">July 2021 — July 2025</p>
+          <p class="coursework-label">Relevant coursework</p>
+          <ul>
+            <li>Database Management Systems</li>
+            <li>Machine Learning</li>
+          </ul>
+        </div>
+
+        <p class="certs-label">Online certifications</p>
+        <div class="certs-grid">
+          <div class="cert-card"><img src="assets/certs/sheryians_coding_school.jpg" alt="Sheryians Coding School" loading="lazy"></div>
+          <div class="cert-card"><img src="assets/certs/ibm-logo-2.webp" alt="IBM" loading="lazy"></div>
+          <div class="cert-card"><img src="assets/certs/Code-Clause.png" alt="CodeClause" loading="lazy"></div>
+          <div class="cert-card"><img src="assets/certs/cognifyz-1.jpg" alt="Cognifyz Technologies" loading="lazy"></div>
+          <div class="cert-card"><img src="assets/certs/octanet.png" alt="Octanet" loading="lazy"></div>
+          <div class="cert-card"><img src="assets/certs/Rgpv.png" alt="RGPV" loading="lazy"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="code-section" id="experience">
+      <div class="gutter">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+      </div>
+      <div class="code-content">
+        <div class="section-head"><span class="idx">03</span><h2>Experience<span class="dot">.</span></h2></div>
+
+        <div class="timeline-item">
+          <h3>Wyreflow Technologies, Bengaluru</h3>
+          <p class="role">Software Engineer Intern</p>
+          <p class="dates">Dec 2024 — Mar 2025</p>
+          <ul>
+            <li>Contributed to a job-search platform from conception through frontend development, shipping new UI based on client feedback and market trends.</li>
+            <li>Resolved technical issues and bugs reported by users, ensuring prompt resolution and customer satisfaction.</li>
+            <li>Designed and developed the frontend of Hiremi's Super Admin panel.</li>
+            <li>Crafted dynamic, interactive user interfaces with a focus on front-end development.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="code-section" id="projects">
+      <div class="gutter">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+      </div>
+      <div class="code-content">
+        <div class="section-head"><span class="idx">04</span><h2>Projects<span class="dot">.</span></h2></div>
+
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-thumb"><img src="assets/projects/3161832.jpg" alt="Hiremi Super Admin" loading="lazy"></div>
+            <div class="project-body">
+              <h3>Hiremi Super Admin</h3>
+              <p>Admin dashboard frontend for a job-search platform. (Internship projets)</p>
+              <a class="project-link" href="https://super-admin1.netlify.app/" target="_blank" rel="noopener">Visit live <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-thumb"><img src="assets/projects/to-do-list.jpeg" alt="To-do list app" loading="lazy"></div>
+            <div class="project-body">
+              <h3>To-Do List</h3>
+              <p>A simple, clean task manager built for everyday use.</p>
+              <a class="project-link" href="https://12-todolist.netlify.app/" target="_blank" rel="noopener">Visit live <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-thumb"><img src="assets/projects/spotify.jpg" alt="Spotify UI clone" loading="lazy"></div>
+            <div class="project-body">
+              <h3>Spotify UI</h3>
+              <p>Pixel-close clone of Spotify's web interface.</p>
+              <a class="project-link" href="https://spotify-clonerepo.netlify.app/" target="_blank" rel="noopener">Visit live <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-thumb"><img src="assets/projects/portfolio1.webp" alt="Earlier portfolio" loading="lazy"></div>
+            <div class="project-body">
+              <h3>Portfolio v1</h3>
+              <p>An earlier personal portfolio build.</p>
+              <a class="project-link" href="https://venerable-souffle-5826f0.netlify.app/" target="_blank" rel="noopener">Visit live <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-thumb"><img src="assets/projects/code-editor.jpeg" alt="VS Code style editor" loading="lazy"></div>
+            <div class="project-body">
+              <h3>VS Code Editor</h3>
+              <p>A browser-based code editor UI, Collaborative Online Code Editor.</p>
+              <a class="project-link" href="https://code-editor00.netlify.app/" target="_blank" rel="noopener">Visit live <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-thumb"><img src="assets/projects/chat.png" alt="Real-time chat application" loading="lazy"></div>
+            <div class="project-body">
+              <h3>Real-Time Chat App</h3>
+              <p>Live messaging application with real-time updates.</p>
+              <a href="/assets/progress.html"><span class="project-link disabled"><i class="ri-hammer-line"></i> In progress</span> <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="code-section" id="contact">
+      <div class="gutter">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+      </div>
+      <div class="code-content">
+        <div class="section-head"><span class="idx">05</span><h2>Contact<span class="dot">.</span></h2></div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <i class="ri-map-pin-line"></i>
+            <h3>Address</h3>
+            <p>Sector-73, Noida, Uttar Pradesh — 201301</p>
+          </div>
+          <div class="contact-card">
+            <i class="ri-mail-line"></i>
+            <h3>Email</h3>
+            <a href="mailto:rishabhkumar6592@gmail.com">rishabhkumar6592@gmail.com</a>
+          </div>
+          <div class="contact-card">
+            <i class="ri-phone-line"></i>
+            <h3>Phone</h3>
+            <p>+91 9572863162</p>
+          </div>
+          <div class="contact-card">
+            <i class="ri-share-line"></i>
+            <h3>Social</h3>
+            <div class="social-row">
+              <a href="https://www.linkedin.com/in/rishabh-kumar-1806b423a/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+              <a href="https://github.com/rishabh6592" target="_blank" rel="noopener" aria-label="GitHub"><i class="ri-github-fill"></i></a>
+              <a href="mailto:rishabhkumar6592@gmail.com" aria-label="Email"><i class="ri-mail-fill"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <p class="contact-cta"><span class="keyword">function</span> <span class="func">sayHi</span>() { <span class="keyword">return</span> <a href="mailto:rishabhkumar6592@gmail.com">"let's build something"</a>; }</p>
+      </div>
+    </section>
+
+    <p class="eof">// end of file — thanks for scrolling</p>
+    <p class="eoff">Build with ❤️ by - Rishabh</p>
+  </main>
+</div>
+
+<!-- Status bar -->
+<div class="statusbar">
+  <div class="status-left">
+    <span class="status-item"><i class="ri-git-branch-line"></i> main</span>
+    <span class="sep">|</span>
+    <span class="status-item hide-mobile">UTF-8</span>
+    <span class="sep hide-mobile">|</span>
+    <span class="status-item hide-mobile">LF</span>
+  </div>
+  <div class="status-right">
+    <span class="live"><span class="blip"></span><span id="viewCount">connecting…</span></span>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
