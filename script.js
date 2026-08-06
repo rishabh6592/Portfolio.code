@@ -89,3 +89,63 @@ fetch('https://abacus.jasoncameron.dev/hit/rishabh-kumar-portfolio-v3/views')
   .catch(() => {
     if (viewCountEl) viewCountEl.textContent = 'views unavailable';
   });
+
+
+  // menu btn
+
+  (function () {
+    /* ---------- Menu toggle: hamburger <-> cross icon ---------- */
+    const menuBtn = document.getElementById('menuToggle');
+    const sidebarEl = document.getElementById('sidebar');
+    if (menuBtn && sidebarEl) {
+
+      const freshMenuBtn = menuBtn.cloneNode(true);
+      menuBtn.parentNode.replaceChild(freshMenuBtn, menuBtn);
+      const icon = freshMenuBtn.querySelector('i');
+
+      freshMenuBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const isOpen = sidebarEl.classList.toggle('open');
+        document.body.classList.toggle('sidebar-open', isOpen);
+        freshMenuBtn.classList.toggle('is-open', isOpen);
+
+        if (icon) {
+          if (isOpen) {
+            icon.classList.remove('ri-menu-line');
+            icon.classList.add('ri-close-line');
+          } else {
+            icon.classList.remove('ri-close-line');
+            icon.classList.add('ri-menu-line');
+          }
+        }
+      });
+    }
+  })();
+
+  // arrow up btn
+  (function () {
+    /* ---------- Back to top: sirf projects/contact visible hone par dikhana ---------- */
+    const btn = document.getElementById('backToTopBtn');
+    const homeEl = document.getElementById('home');
+    const targets = [document.getElementById('projects'), document.getElementById('contact')].filter(Boolean);
+
+    function checkVisibility() {
+      const anyVisible = targets.some(t => {
+        const r = t.getBoundingClientRect();
+        return r.top < window.innerHeight && r.bottom > 0;
+      });
+      if (btn) btn.classList.toggle('show', anyVisible);
+    }
+
+    if (btn && targets.length) {
+      window.addEventListener('scroll', checkVisibility, { passive: true });
+      window.addEventListener('resize', checkVisibility);
+      checkVisibility(); // initial check
+
+      btn.addEventListener('click', () => {
+        if (homeEl) homeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  })();

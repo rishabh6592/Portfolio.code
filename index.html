@@ -206,11 +206,11 @@
           </div>
 
           <div class="project-card">
-            <div class="project-thumb"><img src="assets/projects/chat.png" alt="Real-time chat application" loading="lazy"></div>
+            <div class="project-thumb"><img src="assets/projects/chat.png" alt="VS Code style editor" loading="lazy"></div>
             <div class="project-body">
               <h3>Real-Time Chat App</h3>
               <p>Live messaging application with real-time updates.</p>
-              <a href="/assets/progress.html"><span class="project-link disabled"><i class="ri-hammer-line"></i> In progress</span> <i class="ri-arrow-right-up-line"></i></a>
+              <a class="project-link" href="/new_portfolio/progress.html" target="_blank" rel="noopener">Visit live <i class="ri-arrow-right-up-line"></i></a>
             </div>
           </div>
         </div>
@@ -261,6 +261,11 @@
   </main>
 </div>
 
+<!-- Back to top arrow: sirf projects/contact section me scroll karne par dikhega -->
+<button id="backToTopBtn" class="back-to-top" aria-label="Go to home">
+  <i class="ri-arrow-up-line"></i>
+</button>
+
 <!-- Status bar -->
 <div class="statusbar">
   <div class="status-left">
@@ -275,55 +280,7 @@
   </div>
 </div>
 
-<!-- Back to Top Button -->
-<button id="backToTop" aria-label="Back to top">
-  <i class="ri-arrow-up-line"></i>
-</button>
-
 <style>
-#backToTop {
-  position: fixed !important;
-  bottom: 70px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(30,30,46,0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  color: rgba(255,255,255,0.85);
-  font-size: 18px;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(15px);
-  transition: opacity .3s ease, transform .3s ease, background .2s ease;
-  z-index: 99999 !important;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-}
-#backToTop.show {
-  opacity: 0.85;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-#backToTop:hover {
-  background: rgba(79,70,229,0.7);
-  opacity: 1;
-}
-@media (max-width: 640px) {
-  #backToTop {
-    bottom: 60px;
-    right: 16px;
-    width: 46px;
-    height: 46px;
-    font-size: 19px;
-  }
-}
-
 /* Menu button ko cross me smoothly badalne ke liye */
 #menuToggle i {
   transition: transform .25s ease;
@@ -332,108 +289,46 @@
 #menuToggle.is-open i {
   transform: rotate(90deg);
 }
+
+/* ---------- Back to top arrow ---------- */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+.back-to-top.show {
+  opacity: 0.45;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-to-top:hover {
+  opacity: 0.9;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 640px) {
+  .back-to-top { right: 14px; bottom: 54px; width: 40px; height: 40px; font-size: 18px; }
+}
 </style>
 
 <script src="script.js"></script>
-<script>
-  (function () {
-    /* ---------- Back to Top button (sirf Projects & Contact) ---------- */
-    const backToTopBtn = document.getElementById('backToTop');
-    if (backToTopBtn) {
-      const targetIds = ['projects', 'contact'];
-      const targetSections = targetIds
-        .map((id) => document.getElementById(id))
-        .filter(Boolean);
 
-      function isTargetSectionInView() {
-        const viewportH = window.innerHeight || document.documentElement.clientHeight;
-        // exact midpoint ki jagah ek broad band (25% se 75% viewport) check karo -
-        // ye mobile pe fast scroll / address-bar resize ke against zyada reliable hai
-        const bandTop = viewportH * 0.25;
-        const bandBottom = viewportH * 0.75;
-
-        return targetSections.some((sec) => {
-          const rect = sec.getBoundingClientRect();
-          if (rect.width === 0 && rect.height === 0) return false; // hidden/display:none
-          // section ka koi bhi hissa is band se overlap kare to "in view" maano
-          return rect.top <= bandBottom && rect.bottom >= bandTop;
-        });
-      }
-
-      let ticking = false;
-      function scheduleCheck() {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          if (isTargetSectionInView()) {
-            backToTopBtn.classList.add('show');
-          } else {
-            backToTopBtn.classList.remove('show');
-          }
-          ticking = false;
-        });
-      }
-
-      // Scroll ke saare possible sources sun rahe hain (mobile pe bhi reliable)
-      window.addEventListener('scroll', scheduleCheck, { passive: true });
-      document.addEventListener('scroll', scheduleCheck, { passive: true, capture: true });
-      window.addEventListener('resize', scheduleCheck);
-      window.addEventListener('orientationchange', scheduleCheck);
-      window.addEventListener('touchmove', scheduleCheck, { passive: true });
-      window.addEventListener('touchend', scheduleCheck, { passive: true });
-
-      const ep = document.querySelector('.editor-pane');
-      if (ep) ep.addEventListener('scroll', scheduleCheck, { passive: true });
-
-      // Turant check, phir kuch baar thoda ruk ke — images lazy-load hone se
-      // layout shift hota hai jo initial calculation ko galat kar sakta hai
-      scheduleCheck();
-      [200, 500, 1000, 2000, 3000].forEach((delay) => setTimeout(scheduleCheck, delay));
-      window.addEventListener('load', scheduleCheck);
-
-      backToTopBtn.addEventListener('click', () => {
-        backToTopBtn.classList.remove('show');
-
-        const homeLink =
-          document.querySelector('.tab[data-target="home"]') ||
-          document.querySelector('.file-link[data-target="home"]');
-        if (homeLink) homeLink.click();
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        const epEl = document.querySelector('.editor-pane');
-        if (epEl) epEl.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
-
-    /* ---------- Menu toggle: hamburger <-> cross icon ---------- */
-    const menuBtn = document.getElementById('menuToggle');
-    const sidebarEl = document.getElementById('sidebar');
-    if (menuBtn && sidebarEl) {
-      // Purane duplicate/conflicting listeners hata kar ek hi clean listener
-      const freshMenuBtn = menuBtn.cloneNode(true);
-      menuBtn.parentNode.replaceChild(freshMenuBtn, menuBtn);
-      const icon = freshMenuBtn.querySelector('i');
-
-      freshMenuBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const isOpen = sidebarEl.classList.toggle('open');
-        document.body.classList.toggle('sidebar-open', isOpen);
-        freshMenuBtn.classList.toggle('is-open', isOpen);
-
-        if (icon) {
-          if (isOpen) {
-            icon.classList.remove('ri-menu-line');
-            icon.classList.add('ri-close-line');
-          } else {
-            icon.classList.remove('ri-close-line');
-            icon.classList.add('ri-menu-line');
-          }
-        }
-      });
-    }
-  })();
-</script>
 </body>
 </html>

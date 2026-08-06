@@ -38,6 +38,32 @@
       display: block;
     }
 
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s, opacity 0.2s;
+    }
+
+    .back-home:hover {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .back-home .arrow {
+      transition: transform 0.2s;
+    }
+
+    .back-home:hover .arrow {
+      transform: translateX(-3px);
+    }
+
     /* Mobile */
     @media (max-width: 768px) {
       body {
@@ -57,40 +83,10 @@
 
 <body>
 
-  <!-- <h1>Add Some Features 🧑‍💻</h1> -->
-  <img src="/assets/images/WhatsApp Image 2026-08-01 at 3.11.02 PM.jpeg" alt="">
-  <!-- <a style="margin-top: 3%; color: white;" href="/index.html"> ⬅️ Back to Home</a> -->
-   <a class="back-home" href="/index.html">
-  <span class="arrow">⬅️</span> Back to Home
-</a>
-
-<style>
-  .back-home {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 24px;
-    color: #fff;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    text-decoration: none;
-    padding-bottom: 2px;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s, opacity 0.2s;
-  }
-
-  .back-home:hover {
-    border-bottom: 1px solid rgba(255,255,255,0.6);
-  }
-
-  .back-home .arrow {
-    transition: transform 0.2s;
-  }
-
-  .back-home:hover .arrow {
-    transform: translateX(-3px);
-  }
-</style>
-
+  <h1>Add Some Features 🧑‍💻</h1>
+  <img src="assets/images/WhatsApp Image.jpeg" alt="">
+  <a class="back-home" href="./index.html"
+    <span class="arrow">⬅️</span> Back to Home
+  </a>
 </body>
 </html>
