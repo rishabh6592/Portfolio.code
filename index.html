@@ -331,36 +331,55 @@
     const backToTopBtn = document.getElementById('backToTop');
     if (!backToTopBtn) return;
 
-    // Sirf Projects aur Contact section me hi button dikhana hai
     const targetSections = [
       document.getElementById('projects'),
       document.getElementById('contact')
     ].filter(Boolean);
 
-    const scrollContainer = document.querySelector('.editor-pane') || window;
+    const visibleTargets = new Set();
 
-    function isInTargetSection() {
-      return targetSections.some((sec) => {
-        const rect = sec.getBoundingClientRect();
-        // section ka kuch hissa viewport ke beech me visible ho to true
-        return rect.top < window.innerHeight * 0.6 && rect.bottom > window.innerHeight * 0.2;
-      });
-    }
-
-    function toggleBackToTop() {
-      if (isInTargetSection()) {
+    function updateButton() {
+      if (visibleTargets.size > 0) {
         backToTopBtn.classList.add('show');
       } else {
         backToTopBtn.classList.remove('show');
       }
     }
 
-    [window, document, scrollContainer].forEach((el) => {
-      el.addEventListener('scroll', toggleBackToTop, { passive: true });
-    });
-    window.addEventListener('resize', toggleBackToTop);
-    toggleBackToTop();
-    setInterval(toggleBackToTop, 500);
+    // IntersectionObserver: section actually screen par dikh rahi hai to hi track karega,
+    // chahe navigation scroll se ho ya tabs se show/hide ho
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          visibleTargets.add(entry.target.id);
+        } else {
+          visibleTargets.delete(entry.target.id);
+        }
+      });
+      updateButton();
+    }, { threshold: 0.25 });
+
+    targetSections.forEach((sec) => observer.observe(sec));
+
+    // Fallback: agar tabs display:none/block se section switch karte hain (IntersectionObserver
+    // aise cases me kabhi trigger nahi karega), to active tab/file-link class bhi check karo
+    function checkActiveTabFallback() {
+      const activeTab = document.querySelector('.tab.active, .file-link.active');
+      if (!activeTab) return;
+      const target = activeTab.getAttribute('data-target');
+      if (target === 'projects' || target === 'contact') {
+        backToTopBtn.classList.add('show');
+      } else {
+        // sirf tab hi single source of truth ho tab isko chhupao,
+        // agar IntersectionObserver ne already dikhaya hai to usko priority do
+        if (visibleTargets.size === 0) backToTopBtn.classList.remove('show');
+      }
+    }
+
+    const tabObserverTarget = document.getElementById('tabs') || document.body;
+    const mo = new MutationObserver(checkActiveTabFallback);
+    mo.observe(tabObserverTarget, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    checkActiveTabFallback();
 
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
