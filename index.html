@@ -257,7 +257,7 @@
     </section>
 
     <p class="eof">// end of file — thanks for scrolling</p>
-    <p class="eoff">Build with ❤️ by - Rishabh</p>
+    <p class="eoff">// Build with ❤️ by - Rishabh</p>
   </main>
 </div>
 
@@ -328,68 +328,91 @@
 <script src="script.js"></script>
 <script>
   (function () {
+    /* ---------- Back to Top button (sirf Projects & Contact) ---------- */
     const backToTopBtn = document.getElementById('backToTop');
-    if (!backToTopBtn) return;
+    if (backToTopBtn) {
+      const targetIds = ['projects', 'contact'];
+      const targetSections = targetIds
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
 
-    const targetSections = [
-      document.getElementById('projects'),
-      document.getElementById('contact')
-    ].filter(Boolean);
+      function getScrollEl() {
+        const ep = document.querySelector('.editor-pane');
+        // agar .editor-pane hi actually scroll ho raha hai to usko use karo, warna window
+        if (ep && ep.scrollHeight > ep.clientHeight + 5) return ep;
+        return null; // null matlab window/document scroll ho raha hai
+      }
 
-    const visibleTargets = new Set();
+      function isTargetSectionInView() {
+        const scrollEl = getScrollEl();
+        const viewportH = scrollEl ? scrollEl.clientHeight : window.innerHeight;
+        const midPoint = viewportH / 2;
 
-    function updateButton() {
-      if (visibleTargets.size > 0) {
-        backToTopBtn.classList.add('show');
-      } else {
+        return targetSections.some((sec) => {
+          const rect = sec.getBoundingClientRect();
+          // section visible aur width/height 0 na ho (display:none nahi)
+          if (rect.width === 0 && rect.height === 0) return false;
+          // viewport ke center point par ye section ho to hi "current section" maano
+          return rect.top <= midPoint && rect.bottom >= midPoint;
+        });
+      }
+
+      let ticking = false;
+      function scheduleCheck() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          if (isTargetSectionInView()) {
+            backToTopBtn.classList.add('show');
+          } else {
+            backToTopBtn.classList.remove('show');
+          }
+          ticking = false;
+        });
+      }
+
+      window.addEventListener('scroll', scheduleCheck, { passive: true });
+      document.addEventListener('scroll', scheduleCheck, { passive: true, capture: true });
+      window.addEventListener('resize', scheduleCheck);
+      window.addEventListener('orientationchange', scheduleCheck);
+
+      // Pehla check turant, phir kuch baar thoda ruk ke — kyunki images lazy-load
+      // hone se layout shift hota hai jo initial calculation ko galat kar sakta hai
+      scheduleCheck();
+      [200, 500, 1000, 2000].forEach((delay) => setTimeout(scheduleCheck, delay));
+      window.addEventListener('load', scheduleCheck);
+
+      backToTopBtn.addEventListener('click', () => {
+        // click hote hi turant hide - scroll khatam hone ka wait nahi
         backToTopBtn.classList.remove('show');
-      }
-    }
 
-    // IntersectionObserver: section actually screen par dikh rahi hai to hi track karega,
-    // chahe navigation scroll se ho ya tabs se show/hide ho
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          visibleTargets.add(entry.target.id);
-        } else {
-          visibleTargets.delete(entry.target.id);
-        }
+        const homeLink =
+          document.querySelector('.tab[data-target="home"]') ||
+          document.querySelector('.file-link[data-target="home"]');
+        if (homeLink) homeLink.click();
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const ep = document.querySelector('.editor-pane');
+        if (ep) ep.scrollTo({ top: 0, behavior: 'smooth' });
       });
-      updateButton();
-    }, { threshold: 0.25 });
-
-    targetSections.forEach((sec) => observer.observe(sec));
-
-    // Fallback: agar tabs display:none/block se section switch karte hain (IntersectionObserver
-    // aise cases me kabhi trigger nahi karega), to active tab/file-link class bhi check karo
-    function checkActiveTabFallback() {
-      const activeTab = document.querySelector('.tab.active, .file-link.active');
-      if (!activeTab) return;
-      const target = activeTab.getAttribute('data-target');
-      if (target === 'projects' || target === 'contact') {
-        backToTopBtn.classList.add('show');
-      } else {
-        // sirf tab hi single source of truth ho tab isko chhupao,
-        // agar IntersectionObserver ne already dikhaya hai to usko priority do
-        if (visibleTargets.size === 0) backToTopBtn.classList.remove('show');
-      }
     }
 
-    const tabObserverTarget = document.getElementById('tabs') || document.body;
-    const mo = new MutationObserver(checkActiveTabFallback);
-    mo.observe(tabObserverTarget, { subtree: true, attributes: true, attributeFilter: ['class'] });
-    checkActiveTabFallback();
+    /* ---------- Menu toggle fix (baar-baar click karna padne wala bug) ---------- */
+    const menuBtn = document.getElementById('menuToggle');
+    const sidebarEl = document.getElementById('sidebar');
+    if (menuBtn && sidebarEl) {
+      // Purane script.js ke duplicate/conflicting listeners hata kar
+      // ek hi clean, reliable listener attach kar rahe hain
+      const freshMenuBtn = menuBtn.cloneNode(true);
+      menuBtn.parentNode.replaceChild(freshMenuBtn, menuBtn);
 
-    backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
-      document.body.scrollTo({ top: 0, behavior: 'smooth' });
-      const ep = document.querySelector('.editor-pane');
-      if (ep) ep.scrollTo({ top: 0, behavior: 'smooth' });
-      const shell = document.querySelector('.shell');
-      if (shell) shell.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+      freshMenuBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        sidebarEl.classList.toggle('open');
+        document.body.classList.toggle('sidebar-open');
+      });
+    }
   })();
 </script>
 </body>
