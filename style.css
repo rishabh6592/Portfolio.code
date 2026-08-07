@@ -111,6 +111,13 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
   padding: 6px;
 }
+.menu-toggle i {
+  transition: transform .25s ease;
+  display: inline-block;
+}
+.menu-toggle.is-open i {
+  transform: rotate(90deg);
+}
 
 /* ---------- Layout shell ---------- */
 .shell {
@@ -490,8 +497,40 @@ img { max-width: 100%; display: block; }
   color: var(--text-faint);
   text-align: center;
   padding: 30px;
-  /* margin: 0 0 30px; */
   margin-top: -55px;
+}
+
+/* ---------- Back to top arrow ---------- */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+.back-to-top.show {
+  opacity: 0.45;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-to-top:hover {
+  opacity: 0.9;
+  transform: translateY(-3px);
 }
 
 /* ---------- Mobile ---------- */
@@ -513,4 +552,5 @@ img { max-width: 100%; display: block; }
   .info-grid { grid-template-columns: 1fr; }
   .statusbar .status-item.hide-mobile { display: none; }
   .tabs .tab:not(.active) { display: none; }
+  .back-to-top { right: 14px; bottom: 54px; width: 40px; height: 40px; font-size: 18px; }
 }

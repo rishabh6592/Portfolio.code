@@ -31,17 +31,30 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(s => observer.observe(s));
 
-// ---------- Mobile sidebar ----------
+// ---------- Mobile sidebar + menu icon (hamburger <-> cross) ----------
 const sidebar = document.getElementById('sidebar');
 const menuToggle = document.getElementById('menuToggle');
+const menuIcon = menuToggle?.querySelector('i');
 
-menuToggle?.addEventListener('click', () => {
-  sidebar.classList.toggle('open');
-});
+function openSidebar() {
+  sidebar.classList.add('open');
+  document.body.classList.add('sidebar-open');
+  menuToggle?.classList.add('is-open');
+  menuIcon?.classList.replace('ri-menu-line', 'ri-close-line');
+}
 
 function closeSidebar() {
   sidebar.classList.remove('open');
+  document.body.classList.remove('sidebar-open');
+  menuToggle?.classList.remove('is-open');
+  menuIcon?.classList.replace('ri-close-line', 'ri-menu-line');
 }
+
+menuToggle?.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+});
 
 document.addEventListener('click', (e) => {
   if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== menuToggle) {
@@ -90,62 +103,27 @@ fetch('https://abacus.jasoncameron.dev/hit/rishabh-kumar-portfolio-v3/views')
     if (viewCountEl) viewCountEl.textContent = 'views unavailable';
   });
 
+// ---------- Back to top: only show while projects/contact are visible ----------
+(function () {
+  const btn = document.getElementById('backToTopBtn');
+  const homeEl = document.getElementById('home');
+  const targets = [document.getElementById('projects'), document.getElementById('contact')].filter(Boolean);
 
-  // menu btn
+  function checkVisibility() {
+    const anyVisible = targets.some(t => {
+      const r = t.getBoundingClientRect();
+      return r.top < window.innerHeight && r.bottom > 0;
+    });
+    if (btn) btn.classList.toggle('show', anyVisible);
+  }
 
-  (function () {
-    /* ---------- Menu toggle: hamburger <-> cross icon ---------- */
-    const menuBtn = document.getElementById('menuToggle');
-    const sidebarEl = document.getElementById('sidebar');
-    if (menuBtn && sidebarEl) {
+  if (btn && targets.length) {
+    window.addEventListener('scroll', checkVisibility, { passive: true });
+    window.addEventListener('resize', checkVisibility);
+    checkVisibility(); // initial check
 
-      const freshMenuBtn = menuBtn.cloneNode(true);
-      menuBtn.parentNode.replaceChild(freshMenuBtn, menuBtn);
-      const icon = freshMenuBtn.querySelector('i');
-
-      freshMenuBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const isOpen = sidebarEl.classList.toggle('open');
-        document.body.classList.toggle('sidebar-open', isOpen);
-        freshMenuBtn.classList.toggle('is-open', isOpen);
-
-        if (icon) {
-          if (isOpen) {
-            icon.classList.remove('ri-menu-line');
-            icon.classList.add('ri-close-line');
-          } else {
-            icon.classList.remove('ri-close-line');
-            icon.classList.add('ri-menu-line');
-          }
-        }
-      });
-    }
-  })();
-
-  // arrow up btn
-  (function () {
-    /* ---------- Back to top: sirf projects/contact visible hone par dikhana ---------- */
-    const btn = document.getElementById('backToTopBtn');
-    const homeEl = document.getElementById('home');
-    const targets = [document.getElementById('projects'), document.getElementById('contact')].filter(Boolean);
-
-    function checkVisibility() {
-      const anyVisible = targets.some(t => {
-        const r = t.getBoundingClientRect();
-        return r.top < window.innerHeight && r.bottom > 0;
-      });
-      if (btn) btn.classList.toggle('show', anyVisible);
-    }
-
-    if (btn && targets.length) {
-      window.addEventListener('scroll', checkVisibility, { passive: true });
-      window.addEventListener('resize', checkVisibility);
-      checkVisibility(); // initial check
-
-      btn.addEventListener('click', () => {
-        if (homeEl) homeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    }
-  })();
+    btn.addEventListener('click', () => {
+      if (homeEl) homeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+})();

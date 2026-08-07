@@ -164,7 +164,7 @@
             <div class="project-thumb"><img src="assets/projects/3161832.jpg" alt="Hiremi Super Admin" loading="lazy"></div>
             <div class="project-body">
               <h3>Hiremi Super Admin</h3>
-              <p>Admin dashboard frontend for a job-search platform. (Internship projets)</p>
+              <p>Admin dashboard frontend for a job-search platform. (Internship project)</p>
               <a class="project-link" href="https://super-admin1.netlify.app/" target="_blank" rel="noopener">Visit live <i class="ri-arrow-right-up-line"></i></a>
             </div>
           </div>
@@ -206,12 +206,11 @@
           </div>
 
           <div class="project-card">
-            <div class="project-thumb"><img src="assets/projects/chat.png" alt="VS Code style editor" loading="lazy"></div>
+            <div class="project-thumb"><img src="assets/projects/chat.png" alt="Real-time chat app" loading="lazy"></div>
             <div class="project-body">
               <h3>Real-Time Chat App</h3>
               <p>Live messaging application with real-time updates.</p>
-              <!-- <a class="project-link" href="/new_portfolio/progress.html" target="_blank" rel="noopener">Visit live <i class="ri-arrow-right-up-line"></i></a> -->
-              <a class="project-link" href="/new_portfolio/assets/images/WhatsApp Image.jpeg" target="_blank" rel="noopener">Visit live <i class="ri-arrow-right-up-line"></i></a>
+              <a class="project-link" href="assets/images/WhatsApp%20Image.jpeg" target="_blank" rel="noopener">Visit live <i class="ri-arrow-right-up-line"></i></a>
             </div>
           </div>
         </div>
@@ -262,7 +261,7 @@
   </main>
 </div>
 
-<!-- Back to top arrow: sirf projects/contact section me scroll karne par dikhega -->
+<!-- Back to top arrow -->
 <button id="backToTopBtn" class="back-to-top" aria-label="Go to home">
   <i class="ri-arrow-up-line"></i>
 </button>
@@ -280,54 +279,6 @@
     <span class="live"><span class="blip"></span><span id="viewCount">connecting…</span></span>
   </div>
 </div>
-
-<style>
-/* Menu button ko cross me smoothly badalne ke liye */
-#menuToggle i {
-  transition: transform .25s ease;
-  display: inline-block;
-}
-#menuToggle.is-open i {
-  transform: rotate(90deg);
-}
-
-/* ---------- Back to top arrow ---------- */
-.back-to-top {
-  position: fixed;
-  right: 20px;
-  bottom: 24px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity .3s ease, transform .3s ease;
-  z-index: 999;
-  backdrop-filter: blur(4px);
-}
-.back-to-top.show {
-  opacity: 0.45;
-  visibility: visible;
-  pointer-events: auto;
-}
-.back-to-top:hover {
-  opacity: 0.9;
-  transform: translateY(-3px);
-}
-
-@media (max-width: 640px) {
-  .back-to-top { right: 14px; bottom: 54px; width: 40px; height: 40px; font-size: 18px; }
-}
-</style>
 
 <script src="script.js"></script>
 
