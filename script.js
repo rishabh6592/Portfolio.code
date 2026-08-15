@@ -94,7 +94,7 @@ typeLoop();
 // Free, no-backend hit counter (increments once per page load, shared across all visitors)
 const viewCountEl = document.getElementById('viewCount');
 
-// fetch('https://abacus.jasoncameron.dev/hit/rishabh-kumar-portfolio-v3/views')
+fetch('https://abacus.jasoncameron.dev/hit/rishabh-kumar-portfolio-v4/views')
   .then(res => res.json())
   .then(data => {
     if (viewCountEl) viewCountEl.textContent = data.value.toLocaleString() + ' views · live';
